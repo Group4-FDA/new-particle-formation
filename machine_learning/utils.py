@@ -2,10 +2,14 @@
 Useful functions to clean up the code for building models
 """
 
+from matplotlib import pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+import seaborn as sns
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import confusion_matrix
 
 continuous_variables = [
     'highest_elevation_m',
@@ -76,3 +80,23 @@ def scale_features(df_train, df_test, features):
 def print_stdout_and_file(string, file_pointer):
     print(string, flush=True)
     print(string, file=file_pointer, flush=True)
+
+def plot_confusion_matrix(actual, predicted, labels, fig_name):
+    cm = confusion_matrix(actual, predicted, labels=labels)
+    cmap = LinearSegmentedColormap.from_list("", ["white", "darkBlue"])
+    sns.heatmap(
+        cm,
+        annot=True,
+        xticklabels=labels,
+        yticklabels=labels,
+        cmap=cmap,
+        vmin=0,
+        fmt="d"
+    )
+    plt.ylabel('Actual')
+    plt.xlabel('Predicted')
+    plt.rcParams["figure.figsize"] = [15, 9]
+    plt.savefig(f'resources/machine_learning_results/{fig_name}')
+    plt.clf()
+
+

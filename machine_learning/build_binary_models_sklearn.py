@@ -7,13 +7,10 @@ model that we train, using sklearn
 
 import warnings
 
-from matplotlib import pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
-import seaborn as sns
 from models import classification_models as models
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import \
-    accuracy_score, f1_score, precision_score, recall_score, confusion_matrix
+    accuracy_score, f1_score, precision_score, recall_score
 import pandas as pd
 import numpy as np
 from utils import (
@@ -21,28 +18,10 @@ from utils import (
     extract_target_feature,
     scale_features,
     print_stdout_and_file,
+    plot_confusion_matrix,
 )
 np.random.seed(42)
 from sklearn.exceptions import ConvergenceWarning, UndefinedMetricWarning
-
-
-def plot_confusion_matrix(matrix, labels, fig_name):
-    cm = matrix
-    cmap = LinearSegmentedColormap.from_list("", ["white", "darkBlue"])
-    sns.heatmap(
-        cm,
-        annot=True,
-        xticklabels=labels,
-        yticklabels=labels,
-        cmap=cmap,
-        vmin=0,
-        fmt="d"
-    )
-    plt.ylabel('Actual')
-    plt.xlabel('Predicted')
-    plt.rcParams["figure.figsize"] = [15, 9]
-    plt.savefig(f'resources/machine_learning_results/{fig_name}')
-    plt.clf()
 
 
 to_drop = ['id', 'date', 'partlybad']
@@ -56,10 +35,15 @@ target_value = 'class4'
 df = pd.read_csv('resources/data/original/npf_train.csv')
 df.drop(columns=to_drop, inplace=True)
 
+positive_label = 'event'
+df['class4'] = df['class4'].map(
+    lambda x: positive_label if x != 'nonevent' else x
+)
+
 # split into x_train, y_train, x_test, y_test
 folds = split_in_folds_classification(df, fold_amount, target_value)
-x_train = pd.concat(folds[1:])
 x_test = folds[0]
+x_train = pd.concat(folds[1:])
 x_train, y_train = extract_target_feature(x_train, target_value)
 x_test, y_test = extract_target_feature(x_test, target_value)
 
@@ -88,6 +72,7 @@ for name, model in models.items():
     print_stdout_and_file('\t\tFitting...', file_pointer)
     classifier.fit(x_train.values, y_train.values)
     train_predictions = classifier.predict(x_train.values)
+    test_predictions = classifier.predict(x_test.values)
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
         print_stdout_and_file(
@@ -96,56 +81,41 @@ for name, model in models.items():
             file_pointer
         )
         print_stdout_and_file(
-            '\t\t\tmacro f1 on train: '
-            f'{f1_score(y_train.values, train_predictions, average="macro")}',
+            '\t\t\tf1 on train: '
+            f'{f1_score(y_train.values, train_predictions, pos_label=positive_label)}',
             file_pointer
         )
-        print_stdout_and_file(
-            '\t\t\tmicro f1 on train: '
-            f'{f1_score(y_train.values, train_predictions, average="micro")}',
-            file_pointer
-        )
-        test_predictions = classifier.predict(x_test.values)
         print_stdout_and_file(
             '\t\t\taccuracy on test: '
             f'{accuracy_score(y_test.values, test_predictions)}',
             file_pointer
         )
         print_stdout_and_file(
-            '\t\t\tmacro precision on test: '
-            f'{precision_score(y_test.values, test_predictions, average="macro")}',
+            '\t\t\tprecision on test: '
+            f'{precision_score(y_test.values, test_predictions, pos_label=positive_label)}',
             file_pointer
         )
         print_stdout_and_file(
-            '\t\t\tmicro precision on test: '
-            f'{precision_score(y_test.values, test_predictions, average="micro")}',
+            '\t\t\tprecision on test: '
+            f'{precision_score(y_test.values, test_predictions, pos_label=positive_label)}',
             file_pointer
         )
         print_stdout_and_file(
-            '\t\t\tmacro recall on test: '
-            f'{recall_score(y_test.values, test_predictions, average="micro")}',
+            '\t\t\trecall on test: '
+            f'{recall_score(y_test.values, test_predictions, pos_label=positive_label)}',
             file_pointer
         )
         print_stdout_and_file(
-            '\t\t\tmicro recall on test: '
-            f'{recall_score(y_test.values, test_predictions, average="micro")}',
-            file_pointer
-        )
-        print_stdout_and_file(
-            '\t\t\tmacro f1 on train: '
-            f'{f1_score(y_test.values, test_predictions, average="macro")}',
-            file_pointer
-        )
-        print_stdout_and_file(
-            '\t\t\tmicro f1 on train: '
-            f'{f1_score(y_test.values, test_predictions, average="micro")}',
+            '\t\t\tf1 on test: '
+            f'{f1_score(y_test.values, test_predictions, pos_label=positive_label)}',
             file_pointer
         )
         print_stdout_and_file("", file_pointer)
-        # plot_confusion_matrix(
-        #     confusion_matrix,
-        #     ['no_graffiti', 'graffiti'],
-        #     f"{name}_average_confusion_matrix.png",
-        # )
+        plot_confusion_matrix(
+            y_test.values,
+            test_predictions,
+            df[target_value].unique(),
+            f"binary_{name}_average_confusion_matrix.png",
+        )
 
 file_pointer.close()
