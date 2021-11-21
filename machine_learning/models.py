@@ -14,7 +14,7 @@ classification_models = {
         },
         "set_parameters": {
             "n_jobs": -1,
-            "max_iter": 2000
+            "max_iter": 9999
         }
     },
     "BalancedLogisticRegression": {
@@ -24,7 +24,7 @@ classification_models = {
         },
         "set_parameters": {
             "n_jobs": -1,
-            "max_iter": 2000,
+            "max_iter": 9999,
             "class_weight": "balanced"
         }
     },

@@ -8,7 +8,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.metrics import confusion_matrix
 
 continuous_variables = [
@@ -61,6 +61,14 @@ def split_in_folds_classification(df: pd.DataFrame, n, target_feature):
     return folds
 
 
+def get_stratified_train_test_folds(
+    df: pd.DataFrame, target_feature, test_factor: int = 0.2
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    split = train_test_split(df, test_size=test_factor, stratify=df[target_feature])
+    train_df, test_df = split[1], split[0]
+    return train_df, test_df
+
+
 def extract_target_feature(df, target_feature):
     target = df[target_feature]
     df = df.drop(columns=[target_feature])
@@ -81,6 +89,7 @@ def print_stdout_and_file(string, file_pointer):
     print(string, flush=True)
     print(string, file=file_pointer, flush=True)
 
+
 def plot_confusion_matrix(actual, predicted, labels, fig_name):
     cm = confusion_matrix(actual, predicted, labels=labels)
     cmap = LinearSegmentedColormap.from_list("", ["white", "darkBlue"])
@@ -98,5 +107,3 @@ def plot_confusion_matrix(actual, predicted, labels, fig_name):
     plt.rcParams["figure.figsize"] = [15, 9]
     plt.savefig(f'resources/machine_learning_results/{fig_name}')
     plt.clf()
-
-
