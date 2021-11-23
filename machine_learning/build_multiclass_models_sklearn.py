@@ -1,130 +1,108 @@
-"""
-Use the buildings_model_features csv to build models using sklearn
-
-Here we do cross validation and hyperparameter tuning for each
-model that we train, using sklearn
-"""
-
-import warnings
-
-from models import classification_models as models
-from sklearn.model_selection import RandomizedSearchCV
+from utils import scale_features, print_stdout_and_file, plot_confusion_matrix
+from build_models_sklearn_template import \
+    BuildModelsSklearnTemplate
 from sklearn.metrics import \
     accuracy_score, f1_score, precision_score, recall_score
-import pandas as pd
-import numpy as np
-from utils import (
-    split_in_folds_classification,
-    extract_target_feature,
-    scale_features,
-    print_stdout_and_file,
-    plot_confusion_matrix,
-)
-np.random.seed(42)
-from sklearn.exceptions import ConvergenceWarning, UndefinedMetricWarning
 
-to_drop = ['id', 'date', 'partlybad']
 
-file_pointer \
-    = open('resources/machine_learning_results/classification_models.txt', 'w')
+class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
+    def __init__(
+        self,
+        input_csv_file_name: str,
+        target_column: str,
+        output_file_name: str,
+        columns_to_drop: list[str] = [],
+        test_factor: float = 0.2,
+        train_folds: int = 5,
+        tuning_iterations: int = 20,
+    ):
+        BuildModelsSklearnTemplate.__init__(
+            self,
+            input_csv_file_name,
+            target_column,
+            output_file_name,
+            test_factor=test_factor,
+            train_folds=train_folds,
+            tuning_iterations=tuning_iterations,
+        )
+        self.columns_to_drop = columns_to_drop
 
-fold_amount = 5
-target_value = 'class4'
+    def _do_at_init(self) -> None:
+        self.df.drop(columns=self.columns_to_drop, inplace=True)
 
-df = pd.read_csv('resources/data/original/npf_train.csv')
-df.drop(columns=to_drop, inplace=True)
+    def _do_preprocessing(self) -> None:
+        x_train, x_test \
+            = scale_features(self.x_train, self.x_test, self.x_test.columns)
 
-# split into x_train, y_train, x_test, y_test
-folds = split_in_folds_classification(df, fold_amount, target_value)
-x_test = folds[0]
-x_train = pd.concat(folds[1:])
-x_train, y_train = extract_target_feature(x_train, target_value)
-x_test, y_test = extract_target_feature(x_test, target_value)
-
-# scale all features
-x_train, x_test = scale_features(x_train, x_test, x_test.columns)
-
-for name, model in models.items():
-    print_stdout_and_file(f'Now training {name}', file_pointer)
-    # Hyper parameter tuning on the train set
-    print('\tTuning...')
-    tuner = RandomizedSearchCV(
-        model['class'](**model['set_parameters']),
-        model['hyperparameters'],
-        refit=False,
-        n_iter=20,
-    )
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=UserWarning)
-        warnings.filterwarnings("ignore", category=ConvergenceWarning)
-        tuner.fit(x_train.values, y_train.values)
-    best_params = tuner.best_params_ | model['set_parameters']
-    print_stdout_and_file(f'\t\tBest Params: {best_params}', file_pointer)
-
-    # train and evaluate
-    classifier = model['class'](**best_params)
-    print_stdout_and_file('\t\tFitting...', file_pointer)
-    classifier.fit(x_train.values, y_train.values)
-    train_predictions = classifier.predict(x_train.values)
-    test_predictions = classifier.predict(x_test.values)
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
+    def _do_print_evaluations(
+        self, train_predictions: list, test_predictions: list, model_name: str
+    ) -> None:
         print_stdout_and_file(
             '\t\t\taccuracy on train: '
-            f'{accuracy_score(y_train.values, train_predictions)}',
-            file_pointer
+            f'{accuracy_score(self.y_train.values, train_predictions)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmacro f1 on train: '
-            f'{f1_score(y_train.values, train_predictions, average="macro")}',
-            file_pointer
+            f'{f1_score(self.y_train.values, train_predictions, average="macro")}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmicro f1 on train: '
-            f'{f1_score(y_train.values, train_predictions, average="micro")}',
-            file_pointer
+            f'{f1_score(self.y_train.values, train_predictions, average="micro")}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\taccuracy on test: '
-            f'{accuracy_score(y_test.values, test_predictions)}',
-            file_pointer
+            f'{accuracy_score(self.y_test.values, test_predictions)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmacro precision on test: '
-            f'{precision_score(y_test.values, test_predictions, average="macro")}',
-            file_pointer
+            f'{precision_score(self.y_test.values, test_predictions, average="macro", zero_division=0)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmicro precision on test: '
-            f'{precision_score(y_test.values, test_predictions, average="micro")}',
-            file_pointer
+            f'{precision_score(self.y_test.values, test_predictions, average="micro", zero_division=0)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmacro recall on test: '
-            f'{recall_score(y_test.values, test_predictions, average="micro")}',
-            file_pointer
+            f'{recall_score(self.y_test.values, test_predictions, average="micro", zero_division=0)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmicro recall on test: '
-            f'{recall_score(y_test.values, test_predictions, average="micro")}',
-            file_pointer
+            f'{recall_score(self.y_test.values, test_predictions, average="micro", zero_division=0)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmacro f1 on test: '
-            f'{f1_score(y_test.values, test_predictions, average="macro")}',
-            file_pointer
+            f'{f1_score(self.y_test.values, test_predictions, average="macro", zero_division=0)}',
+            self.file_pointer
         )
         print_stdout_and_file(
             '\t\t\tmicro f1 on test: '
-            f'{f1_score(y_test.values, test_predictions, average="micro")}',
-            file_pointer
+            f'{f1_score(self.y_test.values, test_predictions, average="micro", zero_division=0)}',
+            self.file_pointer
         )
-        print_stdout_and_file("", file_pointer)
+        print_stdout_and_file("", self.file_pointer)
         plot_confusion_matrix(
-            y_test.values,
+            self.y_test.values,
             test_predictions,
-            df[target_value].unique(),
-            f"multiclass_{name}_average_confusion_matrix.png",
+            self.df[self.target_column].unique(),
+            f"multiclass_{model_name}_average_confusion_matrix.png",
         )
 
-file_pointer.close()
+
+process = BuildMulticlassModelsSklearn(
+    input_csv_file_name='resources/data/original/npf_train.csv',
+    target_column='class4',
+    output_file_name
+        ='resources/machine_learning_results/classification_models.txt',
+    columns_to_drop=['id', 'date', 'partlybad'],
+    test_factor=0.2,
+    train_folds=5,
+    tuning_iterations=20,
+).compute()
