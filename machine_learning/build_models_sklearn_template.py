@@ -106,7 +106,7 @@ class BuildModelsSklearnTemplate:
             print_stdout_and_file(
                 f'\t\tBest Params: {best_params}', self.file_pointer
             )
-            print_stdout_and_file('\t\tFitting...', self.file_pointer)
+            print('\t\tFitting...')
             classifier = self._train_model(model, best_params)
             train_predictions = classifier.predict(self.x_train.values)
             test_predictions = classifier.predict(self.x_test.values)

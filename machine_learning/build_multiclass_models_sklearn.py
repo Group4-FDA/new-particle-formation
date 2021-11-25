@@ -3,6 +3,8 @@ from build_models_sklearn_template import \
     BuildModelsSklearnTemplate
 from sklearn.metrics import \
     accuracy_score, f1_score, precision_score, recall_score
+import numpy as np
+np.random.seed(42)
 
 
 class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
@@ -100,7 +102,7 @@ process = BuildMulticlassModelsSklearn(
     input_csv_file_name='resources/data/original/npf_train.csv',
     target_column='class4',
     output_file_name
-        ='resources/machine_learning_results/classification_models.txt',
+        ='resources/machine_learning_results/multiclass_classification_models.txt',
     columns_to_drop=['id', 'date', 'partlybad'],
     test_factor=0.2,
     train_folds=5,
