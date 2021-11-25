@@ -8,7 +8,8 @@ from sklearn.metrics import \
 class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
     def __init__(
         self,
-        input_csv_file_name: str,
+        input_train_csv_file_name: str,
+        input_test_csv_file_name: str,
         target_column: str,
         positive_label: str,
         negative_label: str,
@@ -20,7 +21,8 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
     ):
         BuildModelsSklearnTemplate.__init__(
             self,
-            input_csv_file_name,
+            input_train_csv_file_name,
+            input_test_csv_file_name,
             target_column,
             output_file_name,
             test_factor=test_factor,
@@ -32,11 +34,12 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
         self.negative_label = negative_label
 
     def _do_at_init(self) -> None:
-        self.df.drop(columns=self.columns_to_drop, inplace=True)
-        self.df[self.target_column] = self.df[self.target_column].map(
-            lambda x: self.positive_label if x == self.positive_label
-            else self.negative_label
-        )
+        for df in [self.df_train, self.df_test]:
+            df.drop(columns=self.columns_to_drop, inplace=True)
+            df[self.target_column] = df[self.target_column].map(
+                lambda x: self.positive_label if x == self.positive_label
+                else self.negative_label
+            )
 
     def _do_preprocessing(self) -> None:
         x_train, x_test \
@@ -84,13 +87,14 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
         plot_confusion_matrix(
             self.y_test.values,
             test_predictions,
-            self.df[self.target_column].unique(),
+            self.df_train[self.target_column].unique(),
             f"binary_{model_name}_average_confusion_matrix.png",
         )
 
 
 process = BuildBinaryModelsSklearn(
-    input_csv_file_name='resources/data/original/npf_train.csv',
+    input_train_csv_file_name='resources/data/generated/train_train.csv',
+    input_test_csv_file_name='resources/data/generated/train_test.csv',
     target_column='class4',
     positive_label='nonevent',
     negative_label='event',

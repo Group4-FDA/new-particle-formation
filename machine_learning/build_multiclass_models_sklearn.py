@@ -10,7 +10,8 @@ np.random.seed(42)
 class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
     def __init__(
         self,
-        input_csv_file_name: str,
+        input_train_csv_file_name: str,
+        input_test_csv_file_name: str,
         target_column: str,
         output_file_name: str,
         columns_to_drop: list[str] = [],
@@ -20,7 +21,8 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
     ):
         BuildModelsSklearnTemplate.__init__(
             self,
-            input_csv_file_name,
+            input_train_csv_file_name,
+            input_test_csv_file_name,
             target_column,
             output_file_name,
             test_factor=test_factor,
@@ -30,7 +32,8 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
         self.columns_to_drop = columns_to_drop
 
     def _do_at_init(self) -> None:
-        self.df.drop(columns=self.columns_to_drop, inplace=True)
+        self.df_train.drop(columns=self.columns_to_drop, inplace=True)
+        self.df_test.drop(columns=self.columns_to_drop, inplace=True)
 
     def _do_preprocessing(self) -> None:
         x_train, x_test \
@@ -93,16 +96,19 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
         plot_confusion_matrix(
             self.y_test.values,
             test_predictions,
-            self.df[self.target_column].unique(),
+            self.df_train[self.target_column].unique(),
             f"multiclass_{model_name}_average_confusion_matrix.png",
         )
 
 
 process = BuildMulticlassModelsSklearn(
-    input_csv_file_name='resources/data/original/npf_train.csv',
+    input_train_csv_file_name='resources/data/generated/train_train.csv',
+    input_test_csv_file_name='resources/data/generated/train_test.csv',
     target_column='class4',
-    output_file_name
-        ='resources/machine_learning_results/multiclass_classification_models.txt',
+    output_file_name=(
+        'resources/machine_learning_results/'
+        'multiclass_classification_models.txt'
+    ),
     columns_to_drop=['id', 'date', 'partlybad'],
     test_factor=0.2,
     train_folds=5,

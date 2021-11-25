@@ -18,16 +18,15 @@ from utils import (
     split_in_folds_classification,
     extract_target_feature,
     print_stdout_and_file,
-    get_stratified_train_test_folds,
 )
 np.random.seed(42)
-from sklearn.exceptions import ConvergenceWarning
 
 
 class BuildModelsSklearnTemplate:
     def __init__(
         self,
-        input_csv_file_name: str,
+        input_train_csv_file_name: str,
+        input_test_csv_file_name: str,
         target_column: str,
         output_file_name: str,
         test_factor: float = 0.2,
@@ -35,7 +34,8 @@ class BuildModelsSklearnTemplate:
         tuning_iterations: int = 20,
     ):
         self.file_pointer = open(output_file_name, 'w')
-        self.df = pd.read_csv(input_csv_file_name)
+        self.df_train = pd.read_csv(input_train_csv_file_name)
+        self.df_test = pd.read_csv(input_test_csv_file_name)
         self.target_column = target_column
         self.test_factor = test_factor
         self.train_folds = train_folds
@@ -45,9 +45,6 @@ class BuildModelsSklearnTemplate:
         pass
 
     def _initialize_train_test_split(self) -> None:
-        self.df_train, self.df_test = get_stratified_train_test_folds(
-            self.df, self.target_column, self.test_factor
-        )
         self.x_train, self.y_train \
             = extract_target_feature(self.df_train, self.target_column)
         self.x_test, self.y_test \
