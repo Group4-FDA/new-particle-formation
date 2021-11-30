@@ -47,6 +47,8 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
     def _do_preprocessing(self) -> None:
         self.x_train, self.x_test \
             = scale_features(self.x_train, self.x_test, self.x_test.columns)
+        self.x_train, self.x_test \
+            = self.x_train.values, self.x_test.values
         if self.pca:
             pca = PCA(n_components=19, random_state=1)
             self.x_train = pca.fit_transform(self.x_train)
@@ -127,4 +129,5 @@ process_pca = BuildBinaryModelsSklearn(
     pca=True,
 )
 
+process_pca.compute()
 base_process.compute()

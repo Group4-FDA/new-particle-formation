@@ -41,11 +41,12 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
     def _do_preprocessing(self) -> None:
         self.x_train, self.x_test \
             = scale_features(self.x_train, self.x_test, self.x_test.columns)
+        self.x_train, self.x_test \
+            = self.x_train.values, self.x_test.values
         if self.pca:
             pca = PCA(n_components=19, random_state=1)
             self.x_train = pca.fit_transform(self.x_train)
             self.x_test = pca.transform(self.x_test)
-            print(self.x_test)
 
     def _do_print_evaluations(
         self, train_predictions: list, test_predictions: list, model_name: str

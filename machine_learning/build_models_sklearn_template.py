@@ -72,14 +72,14 @@ class BuildModelsSklearnTemplate:
         )
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=UserWarning)
-            tuner.fit(self.x_train.values, self.y_train.values)
+            tuner.fit(self.x_train, self.y_train)
         return tuner.best_params_ | set_parameters
 
     def _train_model(
         self, model: sklearn.base.BaseEstimator, parameters: dict
     ) -> sklearn.base.BaseEstimator:
         classifier = model['class'](**parameters)
-        classifier.fit(self.x_train.values, self.y_train.values)
+        classifier.fit(self.x_train, self.y_train)
         return classifier
 
     def _do_print_evaluations(
@@ -105,8 +105,8 @@ class BuildModelsSklearnTemplate:
             )
             print('\t\tFitting...')
             classifier = self._train_model(model, best_params)
-            train_predictions = classifier.predict(self.x_train.values)
-            test_predictions = classifier.predict(self.x_test.values)
+            train_predictions = classifier.predict(self.x_train)
+            test_predictions = classifier.predict(self.x_test)
             self._do_print_evaluations(
                 train_predictions, test_predictions, name
             )
