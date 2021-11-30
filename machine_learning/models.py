@@ -16,8 +16,8 @@ classification_models = {
             "C": pow_10_paramter,
         },
         "set_parameters": {
-            "n_jobs": -1,
-            "max_iter": 9999
+            "max_iter": 9999,
+            "solver": "liblinear"
         }
     },
     "BalancedLogisticRegression": {
@@ -26,9 +26,9 @@ classification_models = {
             "C": pow_10_paramter,
         },
         "set_parameters": {
-            "n_jobs": -1,
             "max_iter": 9999,
-            "class_weight": "balanced"
+            "class_weight": "balanced",
+            "solver": "liblinear"
         }
     },
     "NaiveBayes": {
