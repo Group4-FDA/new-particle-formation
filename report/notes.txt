@@ -1,0 +1,2 @@
+with pca we increase bias (worse perf on train better on test
+In report we can say 'from purely binary model we go accuracy X'
