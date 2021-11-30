@@ -4,6 +4,7 @@ from build_models_sklearn_template import \
 from sklearn.metrics import \
     accuracy_score, f1_score, precision_score, recall_score
 import numpy as np
+from sklearn.decomposition import PCA
 np.random.seed(42)
 
 
@@ -18,6 +19,7 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
         test_factor: float = 0.2,
         train_folds: int = 5,
         tuning_iterations: int = 20,
+        pca=False,
     ):
         BuildModelsSklearnTemplate.__init__(
             self,
@@ -30,6 +32,7 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
             tuning_iterations=tuning_iterations,
         )
         self.columns_to_drop = columns_to_drop
+        self.pca = pca
 
     def _do_at_init(self) -> None:
         self.df_train.drop(columns=self.columns_to_drop, inplace=True)
@@ -38,6 +41,11 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
     def _do_preprocessing(self) -> None:
         self.x_train, self.x_test \
             = scale_features(self.x_train, self.x_test, self.x_test.columns)
+        if self.pca:
+            pca = PCA(n_components=19, random_state=1)
+            self.x_train = pca.fit_transform(self.x_train)
+            self.x_test = pca.transform(self.x_test)
+            print(self.x_test)
 
     def _do_print_evaluations(
         self, train_predictions: list, test_predictions: list, model_name: str
@@ -101,7 +109,7 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
         )
 
 
-process = BuildMulticlassModelsSklearn(
+normal_process = BuildMulticlassModelsSklearn(
     input_train_csv_file_name='resources/data/generated/train_train.csv',
     input_test_csv_file_name='resources/data/generated/train_test.csv',
     target_column='class4',
@@ -113,4 +121,20 @@ process = BuildMulticlassModelsSklearn(
     test_factor=0.2,
     train_folds=5,
     tuning_iterations=20,
-).compute()
+)
+process_pca = BuildMulticlassModelsSklearn(
+    input_train_csv_file_name='resources/data/generated/train_train.csv',
+    input_test_csv_file_name='resources/data/generated/train_test.csv',
+    target_column='class4',
+    output_file_name=(
+        'resources/machine_learning_results/'
+        'multiclass_classification_models_pca.txt'
+    ),
+    columns_to_drop=['id', 'date', 'partlybad'],
+    test_factor=0.2,
+    train_folds=5,
+    tuning_iterations=20,
+    pca=True
+)
+process_pca.compute()
+normal_process.compute()

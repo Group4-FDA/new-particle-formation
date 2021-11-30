@@ -3,6 +3,7 @@ from build_models_sklearn_template import \
 from utils import scale_features, print_stdout_and_file, plot_confusion_matrix
 from sklearn.metrics import \
     accuracy_score, f1_score, precision_score, recall_score
+from sklearn.decomposition import PCA
 
 
 class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
@@ -18,6 +19,7 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
         test_factor: float = 0.2,
         train_folds: int = 5,
         tuning_iterations: int = 20,
+        pca=False,
     ):
         BuildModelsSklearnTemplate.__init__(
             self,
@@ -32,6 +34,7 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
         self.columns_to_drop = columns_to_drop
         self.positive_label = positive_label
         self.negative_label = negative_label
+        self.pca = pca
 
     def _do_at_init(self) -> None:
         for df in [self.df_train, self.df_test]:
@@ -44,6 +47,10 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
     def _do_preprocessing(self) -> None:
         self.x_train, self.x_test \
             = scale_features(self.x_train, self.x_test, self.x_test.columns)
+        if self.pca:
+            pca = PCA(n_components=19, random_state=1)
+            self.x_train = pca.fit_transform(self.x_train)
+            self.x_test = pca.transform(self.x_test)
 
     def _do_print_evaluations(
         self, train_predictions: list, test_predictions: list, model_name: str
@@ -92,7 +99,7 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
         )
 
 
-process = BuildBinaryModelsSklearn(
+base_process = BuildBinaryModelsSklearn(
     input_train_csv_file_name='resources/data/generated/train_train.csv',
     input_test_csv_file_name='resources/data/generated/train_test.csv',
     target_column='class4',
@@ -104,4 +111,20 @@ process = BuildBinaryModelsSklearn(
     test_factor=0.2,
     train_folds=5,
     tuning_iterations=20,
-).compute()
+)
+process_pca = BuildBinaryModelsSklearn(
+    input_train_csv_file_name='resources/data/generated/train_train.csv',
+    input_test_csv_file_name='resources/data/generated/train_test.csv',
+    target_column='class4',
+    positive_label='nonevent',
+    negative_label='event',
+    output_file_name
+        ='resources/machine_learning_results/binary_classification_models.txt',
+    columns_to_drop=['id', 'date', 'partlybad'],
+    test_factor=0.2,
+    train_folds=5,
+    tuning_iterations=20,
+    pca=True,
+)
+
+base_process.compute()
