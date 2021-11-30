@@ -42,7 +42,7 @@ class BuildBinaryModelsSklearn(BuildModelsSklearnTemplate):
             )
 
     def _do_preprocessing(self) -> None:
-        x_train, x_test \
+        self.x_train, self.x_test \
             = scale_features(self.x_train, self.x_test, self.x_test.columns)
 
     def _do_print_evaluations(
