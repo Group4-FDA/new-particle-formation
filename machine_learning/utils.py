@@ -43,7 +43,7 @@ def get_stratified_train_test_folds(
     df: pd.DataFrame, target_feature, test_factor: int = 0.2
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     split = train_test_split(df, test_size=test_factor, stratify=df[target_feature])
-    train_df, test_df = split[1], split[0]
+    train_df, test_df = split[0], split[1]
     return train_df, test_df
 
 
