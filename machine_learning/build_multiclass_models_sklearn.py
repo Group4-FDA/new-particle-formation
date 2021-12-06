@@ -101,12 +101,70 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
             f'{f1_score(self.y_test.values, test_predictions, average="micro", zero_division=0)}',
             self.file_pointer
         )
-        print_stdout_and_file("", self.file_pointer)
         plot_confusion_matrix(
             self.y_test.values,
             test_predictions,
             self.df_train[self.target_column].unique(),
             f"multiclass_{model_name}_average_confusion_matrix.png",
+        )
+        print_stdout_and_file("", self.file_pointer)
+        binary_y_train_actual = [
+            'nonevent' if x == 'nonevent' else 'event'
+            for x in self.y_train.values
+        ]
+        binary_y_train_predicted = [
+            'nonevent' if x == 'nonevent' else 'event'
+            for x in train_predictions
+        ]
+        binary_y_test_actual = [
+            'nonevent' if x == 'nonevent' else 'event'
+            for x in self.y_test.values
+        ]
+        binary_y_test_predicted = [
+            'nonevent' if x == 'nonevent' else 'event'
+            for x in test_predictions
+        ]
+        positive_label = 'event'
+        print_stdout_and_file(
+            '\t\t\tbinary accuracy on train: '
+            f'{accuracy_score(binary_y_train_actual, binary_y_train_predicted)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary f1 on train: '
+            f'{f1_score(binary_y_train_actual, binary_y_train_predicted, pos_label=positive_label)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary accuracy on test: '
+            f'{accuracy_score(binary_y_test_actual, binary_y_test_predicted)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary precision on test: '
+            f'{precision_score(binary_y_test_actual, binary_y_test_predicted, pos_label=positive_label)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary precision on test: '
+            f'{precision_score(binary_y_test_actual, binary_y_test_predicted, pos_label=positive_label)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary recall on test: '
+            f'{recall_score(binary_y_test_actual, binary_y_test_predicted, pos_label=positive_label)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary f1 on test: '
+            f'{f1_score(binary_y_test_actual, binary_y_test_predicted, pos_label=positive_label)}',
+            self.file_pointer
+        )
+        plot_confusion_matrix(
+            self.y_test.values,
+            test_predictions,
+            self.df_train[self.target_column].unique(),
+            f"multiclass_binary_{model_name}_average_confusion_matrix.png",
         )
 
 
