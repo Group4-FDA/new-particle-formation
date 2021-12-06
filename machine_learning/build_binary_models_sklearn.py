@@ -121,7 +121,7 @@ process_pca = BuildBinaryModelsSklearn(
     positive_label='nonevent',
     negative_label='event',
     output_file_name
-        ='resources/machine_learning_results/binary_classification_models.txt',
+        ='resources/machine_learning_results/binary_classification_models_pca.txt',
     columns_to_drop=['id', 'date', 'partlybad'],
     test_factor=0.2,
     train_folds=5,
