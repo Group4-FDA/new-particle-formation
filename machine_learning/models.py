@@ -57,7 +57,9 @@ classification_models = {
             "kernel": ["linear", "poly", "rbf", "sigmoid"],
             "degree": list(range(1, 6, 1)),
         },
-        "set_parameters": {}
+        "set_parameters": {
+            "probability": True
+        }
     },
     "BalancedSVM": {
         "class": SVC,
@@ -67,7 +69,8 @@ classification_models = {
             "degree": list(range(1, 3, 1)),
         },
         "set_parameters": {
-            "class_weight": "balanced"
+            "class_weight": "balanced",
+            "probability": True
         }
     },
     "DecisionTree": {

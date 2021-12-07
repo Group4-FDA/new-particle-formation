@@ -1,4 +1,5 @@
-from utils import scale_features, print_stdout_and_file, plot_confusion_matrix
+from utils import \
+    scale_features, print_stdout_and_file, plot_confusion_matrix, perplexity
 from build_models_sklearn_template import \
     BuildModelsSklearnTemplate
 from sklearn.metrics import \
@@ -49,7 +50,12 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
             self.x_test = pca.transform(self.x_test)
 
     def _do_print_evaluations(
-        self, train_predictions: list, test_predictions: list, model_name: str
+        self,
+        train_predictions: list,
+        test_predictions: list,
+        model_name: str,
+        train_predictions_proba: list,
+        test_predictions_proba: list,
     ) -> None:
         print_stdout_and_file(
             '\t\t\taccuracy on train: '
@@ -136,6 +142,11 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
             self.file_pointer
         )
         print_stdout_and_file(
+            '\t\t\tbinary perplexity train: '
+            f'{perplexity(train_predictions_proba, binary_y_train_predicted, positive_label)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
             '\t\t\tbinary accuracy on test: '
             f'{accuracy_score(binary_y_test_actual, binary_y_test_predicted)}',
             self.file_pointer
@@ -158,6 +169,11 @@ class BuildMulticlassModelsSklearn(BuildModelsSklearnTemplate):
         print_stdout_and_file(
             '\t\t\tbinary f1 on test: '
             f'{f1_score(binary_y_test_actual, binary_y_test_predicted, pos_label=positive_label)}',
+            self.file_pointer
+        )
+        print_stdout_and_file(
+            '\t\t\tbinary perplexity test: '
+            f'{perplexity(test_predictions_proba, binary_y_test_predicted, positive_label)}',
             self.file_pointer
         )
         plot_confusion_matrix(

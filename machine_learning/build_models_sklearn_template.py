@@ -107,7 +107,16 @@ class BuildModelsSklearnTemplate:
             classifier = self._train_model(model, best_params)
             train_predictions = classifier.predict(self.x_train)
             test_predictions = classifier.predict(self.x_test)
+            non_event_index = list(classifier.classes_).index('nonevent')
+            train_predictions_proba = \
+                1 - classifier.predict_proba(self.x_train)[:, non_event_index]
+            test_predictions_proba = \
+                1 - classifier.predict_proba(self.x_test)[:, non_event_index]
             self._do_print_evaluations(
-                train_predictions, test_predictions, name
+                train_predictions,
+                test_predictions,
+                name,
+                train_predictions_proba,
+                test_predictions_proba,
             )
         self.file_pointer.close()

@@ -85,3 +85,12 @@ def plot_confusion_matrix(actual, predicted, labels, fig_name):
     plt.rcParams["figure.figsize"] = [15, 9]
     plt.savefig(f'resources/machine_learning_results/{fig_name}')
     plt.clf()
+
+
+def perplexity(y_pred, y_test, positive_label):
+    tmp = [
+        y_pred[i] if y_test[i] == positive_label
+        else 1 - y_pred[i]
+        for i in range(len(y_pred))
+    ]
+    return np.exp(-np.mean(np.log(tmp)))
