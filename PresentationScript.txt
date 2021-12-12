@@ -1,0 +1,25 @@
+Hi, my name is Daniel and together with my group members Fahsinee and Alisa we have formed a group called FDA and together we have performed data analysis and built machine learning models on the New Particle Formation dataset.
+
+First, I will start with the data exploration part. Here, we see how our multiclass target variable "class4" is unbalanced in our training set and we can also see its relationship with some of the features that accompany it, more specifically how the distributions of each class is adjusted as we differentiate between the classes.
+
+We also analyzed how some of the features are correlated to one another. For example, this graph shows some of the features plotted against the mast height at which they were taken.
+
+Unfortunately, we were not able to fully utilize these correlations in our models, as there were too many features and handcrafting feature selection and optimization would have taken too long. Here we can see the correlation matrix of all the 100 features.
+
+Our solution to minimize the features was thus to use Principal Component Analysis. We used a 95% cut-off threshold for the cumulative variance which resulted in 19 components, which is about 20% of the original features.
+
+This correlation matrix shows how the PCA features, labelled here from 0 to 18, are correlated with the original features. For example, we can see that the first principal component is highly positively correlated with the relative humidity means, here denoted with RHIRGA.mean and it is negatively correlated with the photosynthetically active radiation mean and standard deviation, here denoted with PAR.
+
+After deciding on the features to use, we built our pipeline to train multiple discriminative as well as generative models on the dataset.
+We first load the training dataset and remove any unnecessary columns.
+The multiclass dataset is then split into 80% training and 20% test sets using stratified sampling. Note, whenever we speak about the training set from now on, we will be referring to this 80% and the test set to this 20%.
+A scaler is fit on the train set to center it and give it unit standard deviation. This scaler is then applied to the test set.
+PCA is then fit on the train set and applied on the test set to reduce both of them to 19 dimensions.
+The next steps are then executed for each model that we have.
+First, 5-fold cross validation hyperparameter tuning is performed on each model.
+The model with the best parameters is trained on the train set, and
+lastly, the model is applied to our test set and results are calculated accordingly.
+
+This slide shows our results. As can be seen, the logistic regressor which gives equal total weight to each class was our best performer, hence why we chose it when we gave our answers csv file.
+
+Thank you.
