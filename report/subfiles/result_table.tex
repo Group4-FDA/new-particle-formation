@@ -1,41 +1,40 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-
-\begin{document}
 \begin{table}[]
-\begin{tabular}{l|lll|lll|}
-\cline{2-7}
-                                                   & \multicolumn{3}{c|}{Original Data}                                                                                       & \multicolumn{3}{c|}{PCA}                                                                                                 \\ \cline{2-7} 
-                                                   & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy}      & \multicolumn{1}{c|}{Test Perplexity} & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy}      & \multicolumn{1}{c|}{Test Perplexity} \\ \hline
-\multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.8415300546448088} & \multicolumn{1}{l|}{0.8913043478260869} & 1.472173795303405                    & \multicolumn{1}{l|}{0.860655737704918}  & \multicolumn{1}{l|}{0.8913043478260869} & 1.2716445625922759                   \\ \hline
-\multicolumn{1}{|l|}{Balanced Logistic Regression} & \multicolumn{1}{l|}{0.8961748633879781} & \multicolumn{1}{l|}{0.8804347826086957} & 1.1806064413476036                   & \multicolumn{1}{l|}{0.8688524590163934} & \multicolumn{1}{l|}{0.9130434782608695} & 1.200391360226614                    \\ \hline
-\multicolumn{1}{|l|}{NaiveBayes}                   & \multicolumn{1}{l|}{0.76775956284153}   & \multicolumn{1}{l|}{0.7934782608695652} & 1.0067974635304602                   & \multicolumn{1}{l|}{0.819672131147541}  & \multicolumn{1}{l|}{0.8260869565217391} & 1.1790139037447211                   \\ \hline
-\multicolumn{1}{|l|}{MLP Classifier}               & \multicolumn{1}{l|}{0.7240437158469946} & \multicolumn{1}{l|}{0.7934782608695652} & 1.367786539056225                    & \multicolumn{1}{l|}{0.8087431693989071} & \multicolumn{1}{l|}{0.8369565217391305} & 1.5259086361305916                   \\ \hline
-\multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.8579234972677595} & \multicolumn{1}{l|}{0.8913043478260869} & 1.21428518422151                     & \multicolumn{1}{l|}{0.8743169398907104} & \multicolumn{1}{l|}{0.8804347826086957} & 1.223347744937582                    \\ \hline
-\multicolumn{1}{|l|}{Balanced SVM}                 & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.8804347826086957} & 1.2470174502978564                   & \multicolumn{1}{l|}{0.9672131147540983} & \multicolumn{1}{l|}{0.8586956521739131} & 1.2191665513015404                   \\ \hline
-\multicolumn{1}{|l|}{Decision Tree}                & \multicolumn{1}{l|}{0.9371584699453552} & \multicolumn{1}{l|}{0.8586956521739131} & 1.0690324535593245                   & \multicolumn{1}{l|}{0.9371584699453552} & \multicolumn{1}{l|}{0.8043478260869565} & 1.0837196222528507                   \\ \hline
-\multicolumn{1}{|l|}{Balanced Decision Tree}       & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.782608695652174}  & 1.0                                  & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.7608695652173914} & 1.0                                  \\ \hline
-\multicolumn{1}{|l|}{Random Forest}                & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.8586956521739131} & 1.2475198963763021                   & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.8369565217391305} & 1.3509879301872667                   \\ \hline
-\multicolumn{1}{|l|}{Balanced Random Forest}       & \multicolumn{1}{l|}{0.9972677595628415} & \multicolumn{1}{l|}{0.8695652173913043} & 1.2344558754545427                   & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.8478260869565217} & 1.390221234609157                    \\ \hline
-\end{tabular}
+\resizebox{\textwidth}{!}{
+  \begin{tabular}{l|lll|lll|}
+  \cline{2-7}
+                                                     & \multicolumn{3}{c|}{Original Data}                                                                                       & \multicolumn{3}{c|}{PCA}                                                                                                 \\ \cline{2-7}
+                                                     & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy}      & \multicolumn{1}{c|}{Test Perplexity} & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy}      & \multicolumn{1}{c|}{Test Perplexity} \\ \hline
+  \multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.84} & \multicolumn{1}{l|}{\textbf{0.89}} & 1.47                    & \multicolumn{1}{l|}{0.86}  & \multicolumn{1}{l|}{0.89} & 1.27                   \\ \hline
+  \multicolumn{1}{|l|}{Balanced Logistic Regression} & \multicolumn{1}{l|}{0.9} & \multicolumn{1}{l|}{0.88} & 1.18                   & \multicolumn{1}{l|}{0.87} & \multicolumn{1}{l|}{\textbf{0.91}} & 1.20                    \\ \hline
+  \multicolumn{1}{|l|}{NaiveBayes}                   & \multicolumn{1}{l|}{0.77}   & \multicolumn{1}{l|}{0.79} & 1.01                   & \multicolumn{1}{l|}{0.82}  & \multicolumn{1}{l|}{0.83} & 1.18                   \\ \hline
+  \multicolumn{1}{|l|}{MLP Classifier}               & \multicolumn{1}{l|}{0.72} & \multicolumn{1}{l|}{0.79} & 1.37                    & \multicolumn{1}{l|}{0.81} & \multicolumn{1}{l|}{0.84} & 1.53                   \\ \hline
+  \multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.86} & \multicolumn{1}{l|}{0.90} & 1.21                     & \multicolumn{1}{l|}{0.87} & \multicolumn{1}{l|}{0.88} & 1.22                    \\ \hline
+  \multicolumn{1}{|l|}{Balanced SVM}                 & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.88} & 1.24                   & \multicolumn{1}{l|}{0.97} & \multicolumn{1}{l|}{0.86} & 1.22                   \\ \hline
+  \multicolumn{1}{|l|}{Decision Tree}                & \multicolumn{1}{l|}{0.94} & \multicolumn{1}{l|}{0.86} & 1.07                   & \multicolumn{1}{l|}{0.94} & \multicolumn{1}{l|}{0.80} & 1.08                   \\ \hline
+  \multicolumn{1}{|l|}{Balanced Decision Tree}       & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.78}  & 1.00                                  & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.76} & 1.00                                  \\ \hline
+  \multicolumn{1}{|l|}{Random Forest}                & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.86} & 1.25                   & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.84} & 1.35                   \\ \hline
+  \multicolumn{1}{|l|}{Balanced Random Forest}       & \multicolumn{1}{l|}{1.00} & \multicolumn{1}{l|}{0.87} & 1.23                   & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.85} & 1.39                    \\ \hline
+  \end{tabular}
+}
 \end{table}
 
 
 \begin{table}[]
+\resizebox{\textwidth}{!}{
 \begin{tabular}{l|ll|ll|}
 \cline{2-5}
-                                                   & \multicolumn{2}{c|}{Original Data}                                           & \multicolumn{2}{c|}{PCA}                                                     \\ \cline{2-5} 
-                                                   & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy} & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy} \\ \hline
-\multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.6530054644808743} & 0.6413043478260869                 & \multicolumn{1}{l|}{0.674863387978142}  & 0.6739130434782609                 \\ \hline
-\multicolumn{1}{|l|}{Balanced Logistic Regression} & \multicolumn{1}{l|}{0.7622950819672131} & 0.5869565217391305                 & \multicolumn{1}{l|}{0.6693989071038251} & 0.6847826086956522                 \\ \hline
-\multicolumn{1}{|l|}{NaiveBayes}                   & \multicolumn{1}{l|}{0.5792349726775956} & 0.5217391304347826                 & \multicolumn{1}{l|}{0.6420765027322405} & 0.5869565217391305                 \\ \hline
-\multicolumn{1}{|l|}{MLP Classifier}               & \multicolumn{1}{l|}{0.6038251366120219} & 0.6086956521739131                 & \multicolumn{1}{l|}{0.6284153005464481} & 0.6956521739130435                 \\ \hline
-\multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.6775956284153005} & 0.6630434782608695                 & \multicolumn{1}{l|}{0.7076502732240437} & 0.6521739130434783                 \\ \hline
-\multicolumn{1}{|l|}{Balanced SVM}                 & \multicolumn{1}{l|}{1.0}                & 0.6304347826086957                 & \multicolumn{1}{l|}{0.9344262295081968} & 0.6195652173913043                 \\ \hline
-\multicolumn{1}{|l|}{Decision Tree}                & \multicolumn{1}{l|}{0.9016393442622951} & 0.6521739130434783                 & \multicolumn{1}{l|}{0.8442622950819673} & 0.5434782608695652                 \\ \hline
-\multicolumn{1}{|l|}{Balanced Decision Tree}       & \multicolumn{1}{l|}{1.0}                & 0.6195652173913043                 & \multicolumn{1}{l|}{1.0}                & 0.5543478260869565                 \\ \hline
-\multicolumn{1}{|l|}{Random Forest}                & \multicolumn{1}{l|}{1.0}                & 0.6521739130434783                 & \multicolumn{1}{l|}{1.0}                & 0.5760869565217391                 \\ \hline
-\multicolumn{1}{|l|}{Balanced Random Forest}       & \multicolumn{1}{l|}{0.9972677595628415} & 0.6413043478260869                 & \multicolumn{1}{l|}{1.0}                & 0.6304347826086957                 \\ \hline
+                                                  & \multicolumn{2}{c|}{Original Data}                                           & \multicolumn{2}{c|}{PCA}                                                     \\ \cline{2-5}
+                                                  & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy} & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy} \\ \hline
+\multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.65} & 0.64                 & \multicolumn{1}{l|}{0.67}  & 0.67                 \\ \hline
+\multicolumn{1}{|l|}{Balanced Logistic Regression} & \multicolumn{1}{l|}{0.76} & 0.59                 & \multicolumn{1}{l|}{0.67} & 0.68                 \\ \hline
+\multicolumn{1}{|l|}{NaiveBayes}                   & \multicolumn{1}{l|}{0.58} & 0.52                 & \multicolumn{1}{l|}{0.64} & 0.59                 \\ \hline
+\multicolumn{1}{|l|}{MLP Classifier}               & \multicolumn{1}{l|}{0.60} & 0.61                 & \multicolumn{1}{l|}{0.63} & \textbf{0.70}                 \\ \hline
+\multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.68} & \textbf{0.66}                 & \multicolumn{1}{l|}{0.71} & 0.65                 \\ \hline
+\multicolumn{1}{|l|}{Balanced SVM}                 & \multicolumn{1}{l|}{1.00}                & 0.63                 & \multicolumn{1}{l|}{0.93} & 0.62                 \\ \hline
+\multicolumn{1}{|l|}{Decision Tree}                & \multicolumn{1}{l|}{0.90} & 0.65                 & \multicolumn{1}{l|}{0.84} & 0.54                 \\ \hline
+\multicolumn{1}{|l|}{Balanced Decision Tree}       & \multicolumn{1}{l|}{1.00}                & 0.62                 & \multicolumn{1}{l|}{1.00}                & 0.55                 \\ \hline
+\multicolumn{1}{|l|}{Random Forest}                & \multicolumn{1}{l|}{1.00}                & 0.65                 & \multicolumn{1}{l|}{1.00}                & 0.58                 \\ \hline
+\multicolumn{1}{|l|}{Balanced Random Forest}       & \multicolumn{1}{l|}{1.0} & 0.64                 & \multicolumn{1}{l|}{1.00}                & 0.63                 \\ \hline
 \end{tabular}
+}
 \end{table}
-\end{document}
