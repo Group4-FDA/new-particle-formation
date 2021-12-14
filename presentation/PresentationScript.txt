@@ -1,0 +1,22 @@
+Hi, my name is Daniel and together with Fahsinee and Alisa we have formed a group called FDA to perform data analysis and build machine learning models on the New Particle Formation dataset.
+
+First, we perform data exploration. Here, we can see how our multiclass target variable "class4" is imbalanced in our training set. We can also see its relationship with some of the features that accompany it, more specifically, how the distributions of each class is adjusted as we differentiate between them.
+
+We also analyzed the correlation between some of the features. For example, this graph shows some of the features plotted against the mast height at which they were taken.
+
+Unfortunately, we were not able to fully utilize these correlations in our models, as there were too many features and handcrafting feature selection would have taken too long, hence we opted for automated feature selection through dimensionality reduction.
+
+The chosen technique is Principal Component Analysis. We used a 95% cut-off threshold for the cumulative variance which resulted in 19 components, about one fifth of the original number of features.
+
+This correlation matrix shows how the PCA features are correlated with the original ones. For example, we can see that the first principal component is highly positively correlated with the relative humidity means, and negatively correlated with the photosynthetically active radiation
+
+After deciding on dimensionality reduction technique, we built our pipeline to train and evaluate multiple discriminative as well as generative models.
+After loading the training dataset and remove any unnecessary columns, we split it into 80% training and 20% test sets using stratified sampling.
+A scaler is fit on the train subset to center it and give it unit standard deviation. This scaler is then applied to the test set.
+Similarly, PCA is then fit on the train set and applied to the test set to reduce both of them to 19 dimensions.
+For each model, we perform 5-fold cross validation hyperparameter tuning.
+The model with the best parameters is trained on the train set and then evaluated on the test set.
+
+This slide shows our results. As can be seen, the logistic regressor with balanced class weights was the best performer using these methods.
+
+Thank you.
