@@ -10,7 +10,7 @@ The next step is to train the following generative and discriminative models on 
 \begin{enumerate}
     \item Generative model 
     
-    The goal of generative models is to describe how data is created. The model relies on the Bayes theorem and uses parameters that maximizing the joint probability of P(X,Y) to trains a model.
+    The goal of generative models is to describe how data is created. The model relies on the Bayes theorem and uses parameters that maximizing the joint probability of P(X,Y) to trains a model. The generative models that we used are as follows:
     
     \begin{enumerate}
         \item NaiveBayes
@@ -19,9 +19,7 @@ The next step is to train the following generative and discriminative models on 
     
     \item Discriminative model.
     
-    The goal of discriminative models is to predicting the labels of the data. The model learns boundaries between classes in a dataset and trains a model using parameters that maximizing the conditional probability P(Y \textbar X).
-    
-    In each separate model, we set a 'class\_weight' parameter to 'balanced'. It will automatically assign class weights that are inversely proportionate to their relative frequencies.
+    The goal of discriminative models is to predicting the labels of the data. The model learns boundaries between classes in a dataset and trains a model using parameters that maximizing the conditional probability P(Y \textbar X). In each separate model, we set a 'class\_weight' parameter to 'balanced'. It will automatically assign class weights that are inversely proportionate to their relative frequencies. The discriminative models that we used are as follows:
     
     \begin{enumerate}
         \item Logistic Regression
