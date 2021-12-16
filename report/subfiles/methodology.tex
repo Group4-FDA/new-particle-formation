@@ -33,5 +33,5 @@ The next step is to train the following generative and discriminative models on 
     \end{enumerate}
 \end{enumerate}
 
-For each model, we perform 5-fold cross-validation hyperparameter tuning. After that, the model with the best parameters is trained on train set and then evaluated on the test set for both original data and PCA.
+For each model, we perform 5-fold cross-validation hyperparameter tuning by using RandomizedSearchCV from sklearn. It splits folds with stratified sampling. After that, the model with the best parameters is trained on train set and then evaluated on the test set for both original data and PCA.
 \end{document}
