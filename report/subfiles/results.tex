@@ -1,3 +1,13 @@
 \chapter{Results and Discussion}
 
 \input{subfiles/result_table}
+
+Tables \ref{tab:binary} and \ref{tab:multiclass} show our results for each model for both the multiclass as well as the binary classification tasks. Accuracy is presented for both train and test set as a way to observe overfitting. Perplexity is also given for the binary classification task. The best performing model on each test set is also highlighted.
+
+First analyzing the table from the binary results, we can see that a lot of the models overfit on the train set. The exceptions are the logistic regressors, naive bayes, multi-layer perceptron and support vector machine without the balanced weights. This is true for the models built on the original data as well as the reduced features after PCA is applied.
+
+It can then be seen that for the models that do not overfit, PCA improved the generalization performance for these models. Meanwhile, it decreased generalization performance for the models more subsceptible to overfitting. This could indicate that PCA further increased this overfitting for these models which were already overfitting.
+
+Focusing our attention now on the multiclass data, we can see that the same models which overfit on the binary task have also overfit here. PCA was also seen to reduce overfitting and improve generalization on the models which were not overfitting, while having the opposite effect of further hampering models which were already overfitting with the original data.
+
+Overall, SVM was found to be the best performer on the original data. However, when PCA was applied, the logistic regressor with balanced weights overtook it and became the best overall performer when incorporating both multiclass and binary tasks. When it comes to models not suited for this task, the decision tree with balanced weights and naive Bayes were the worst performers.

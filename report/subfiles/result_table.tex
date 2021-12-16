@@ -1,14 +1,14 @@
-\begin{table}[]
+\begin{table}[htbp]
 \resizebox{\textwidth}{!}{
   \begin{tabular}{l|lll|lll|}
   \cline{2-7}
                                                      & \multicolumn{3}{c|}{Original Data}                                                                                       & \multicolumn{3}{c|}{PCA}                                                                                                 \\ \cline{2-7}
                                                      & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy}      & \multicolumn{1}{c|}{Test Perplexity} & \multicolumn{1}{c|}{Train Accuracy}     & \multicolumn{1}{c|}{Test Accuracy}      & \multicolumn{1}{c|}{Test Perplexity} \\ \hline
-  \multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.84} & \multicolumn{1}{l|}{\textbf{0.89}} & 1.47                    & \multicolumn{1}{l|}{0.86}  & \multicolumn{1}{l|}{0.89} & 1.27                   \\ \hline
+  \multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.84} & \multicolumn{1}{l|}{0.89} & 1.47                    & \multicolumn{1}{l|}{0.86}  & \multicolumn{1}{l|}{0.89} & 1.27                   \\ \hline
   \multicolumn{1}{|l|}{Balanced Logistic Regression} & \multicolumn{1}{l|}{0.9} & \multicolumn{1}{l|}{0.88} & 1.18                   & \multicolumn{1}{l|}{0.87} & \multicolumn{1}{l|}{\textbf{0.91}} & 1.20                    \\ \hline
   \multicolumn{1}{|l|}{NaiveBayes}                   & \multicolumn{1}{l|}{0.77}   & \multicolumn{1}{l|}{0.79} & 1.01                   & \multicolumn{1}{l|}{0.82}  & \multicolumn{1}{l|}{0.83} & 1.18                   \\ \hline
-  \multicolumn{1}{|l|}{MLP Classifier}               & \multicolumn{1}{l|}{0.72} & \multicolumn{1}{l|}{0.79} & 1.37                    & \multicolumn{1}{l|}{0.81} & \multicolumn{1}{l|}{0.84} & 1.53                   \\ \hline
-  \multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.86} & \multicolumn{1}{l|}{0.90} & 1.21                     & \multicolumn{1}{l|}{0.87} & \multicolumn{1}{l|}{0.88} & 1.22                    \\ \hline
+  \multicolumn{1}{|l|}{MLP}               & \multicolumn{1}{l|}{0.72} & \multicolumn{1}{l|}{0.79} & 1.37                    & \multicolumn{1}{l|}{0.81} & \multicolumn{1}{l|}{0.84} & 1.53                   \\ \hline
+    \multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.86} & \multicolumn{1}{l|}{\textbf{0.90}} & 1.21                     & \multicolumn{1}{l|}{0.87} & \multicolumn{1}{l|}{0.88} & 1.22                    \\ \hline
   \multicolumn{1}{|l|}{Balanced SVM}                 & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.88} & 1.24                   & \multicolumn{1}{l|}{0.97} & \multicolumn{1}{l|}{0.86} & 1.22                   \\ \hline
   \multicolumn{1}{|l|}{Decision Tree}                & \multicolumn{1}{l|}{0.94} & \multicolumn{1}{l|}{0.86} & 1.07                   & \multicolumn{1}{l|}{0.94} & \multicolumn{1}{l|}{0.80} & 1.08                   \\ \hline
   \multicolumn{1}{|l|}{Balanced Decision Tree}       & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.78}  & 1.00                                  & \multicolumn{1}{l|}{1.0}                & \multicolumn{1}{l|}{0.76} & 1.00                                  \\ \hline
@@ -16,10 +16,12 @@
   \multicolumn{1}{|l|}{Balanced Random Forest}       & \multicolumn{1}{l|}{1.00} & \multicolumn{1}{l|}{0.87} & 1.23                   & \multicolumn{1}{l|}{1.00}                & \multicolumn{1}{l|}{0.85} & 1.39                    \\ \hline
   \end{tabular}
 }
+\caption{Binary classification table of results}
+\label{tab:binary}
 \end{table}
 
 
-\begin{table}[]
+\begin{table}[htbp]
 \resizebox{\textwidth}{!}{
 \begin{tabular}{l|ll|ll|}
 \cline{2-5}
@@ -28,7 +30,7 @@
 \multicolumn{1}{|l|}{Logistics Regression}         & \multicolumn{1}{l|}{0.65} & 0.64                 & \multicolumn{1}{l|}{0.67}  & 0.67                 \\ \hline
 \multicolumn{1}{|l|}{Balanced Logistic Regression} & \multicolumn{1}{l|}{0.76} & 0.59                 & \multicolumn{1}{l|}{0.67} & 0.68                 \\ \hline
 \multicolumn{1}{|l|}{NaiveBayes}                   & \multicolumn{1}{l|}{0.58} & 0.52                 & \multicolumn{1}{l|}{0.64} & 0.59                 \\ \hline
-\multicolumn{1}{|l|}{MLP Classifier}               & \multicolumn{1}{l|}{0.60} & 0.61                 & \multicolumn{1}{l|}{0.63} & \textbf{0.70}                 \\ \hline
+\multicolumn{1}{|l|}{MLP}               & \multicolumn{1}{l|}{0.60} & 0.61                 & \multicolumn{1}{l|}{0.63} & \textbf{0.70}                 \\ \hline
 \multicolumn{1}{|l|}{SVM}                          & \multicolumn{1}{l|}{0.68} & \textbf{0.66}                 & \multicolumn{1}{l|}{0.71} & 0.65                 \\ \hline
 \multicolumn{1}{|l|}{Balanced SVM}                 & \multicolumn{1}{l|}{1.00}                & 0.63                 & \multicolumn{1}{l|}{0.93} & 0.62                 \\ \hline
 \multicolumn{1}{|l|}{Decision Tree}                & \multicolumn{1}{l|}{0.90} & 0.65                 & \multicolumn{1}{l|}{0.84} & 0.54                 \\ \hline
@@ -37,4 +39,6 @@
 \multicolumn{1}{|l|}{Balanced Random Forest}       & \multicolumn{1}{l|}{1.0} & 0.64                 & \multicolumn{1}{l|}{1.00}                & 0.63                 \\ \hline
 \end{tabular}
 }
+\caption{Multiclass classification table of results}
+\label{tab:multiclass}
 \end{table}
