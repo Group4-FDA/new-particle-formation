@@ -15,7 +15,7 @@ We are provided with 2 datasets. The training dataset contains 458 days, half of
 
 % TODO: insert pairplot here and something about it
 
-Both datasets contain 50 variables which are mainly measured at the SMEAR II mast \cite{npf_paper}. The variables are further split into their daily means and standard deviations, measured at various times between sunrise and sunset. These consist of relative humidity, carbon monoxide (CO2) concentration, water vapour (H20) concentration, ozone concentration, air temperature, and ultraviolet radiation among others. Some concentrations of the same element are measured at different heights. To understand these height differences better, we provide Figure \ref{fig:height} , which shows where each point indicates the height at which the measurements are taken. These variables are expected to be highly correlated.
+Both datasets contain 50 variables which are mainly measured at the SMEAR II mast. The variables are further split into their daily means and standard deviations, measured at various times between sunrise and sunset. These consist of relative humidity, carbon monoxide (CO2) concentration, water vapour (H20) concentration, ozone concentration, air temperature, and ultraviolet radiation among others. Some concentrations of the same element are measured at different heights. To understand these height differences better, we provide Figure \ref{fig:height}, where each point indicates the height at which the measurements are taken. These variables are expected to be highly correlated.
 
 \begin{figure}
    \centering
@@ -37,7 +37,7 @@ Although not a universal rule, many machine learning algorithms require the vari
 
 \section{Dimensionality Reduction}
 
-To address the large set of correlated variables in our data, we use principal component analysis (PCA) as a means of dimensionality reduction. This is because PCA summarizes the correlated variables to a smaller subset which would explain most of their variability \cite{intro_stat_learning}. The main intention is to decrease bias, hence improving generalization accuracy.
+To address the large set of correlated variables in our data, we use principal component analysis (PCA) as a means of dimensionality reduction. PCA summarizes the correlated variables to a smaller subset which would explain most of their variability \cite{intro_stat_learning}. The main intention is to decrease bias, hence improving generalization accuracy.
 
 Prior to applying PCA, we divided the training dataset into a separate train and test set using stratified sampling, with the test set containing 20\% of the data. The reason for this is so that PCA is fit on the train set only and then applied to the test set in order to avoid overfitting to known data. Any results presented in this section are based on the 80\% of the train set chosen. Furthermore, before any dimensionality reduction is applied, the data is also scaled to mean zero and unit variance.
 
@@ -50,7 +50,7 @@ In PCA, every component explains a part of the variation of the original data. W
    \label{fig:pve}
 \end{figure}
 
-Lastly, in order to interpret the PCA results, we show the correlation matrix of the new components against the original features in Figure \ref{fig:pca_correlation_matrix}. One can see, for example, the first component clearly summarizes the means of relative humidity (RHIRGA), while the second component explains the means of H20 and the third one explains NO and NOx. NO and NOx are highly correlated so this makes sense that they form one component.
+Lastly, in order to interpret the PCA results, we show the correlation matrix of the new components against the original features in Figure \ref{fig:pca_correlation_matrix}. One can see, for example, the first component clearly summarizes the means of relative humidity (RHIRGA), while the second component explains the means of H20 and the third one explains NO and NOx. NO and NOx are highly correlated so it makes sense that they form one component.
 
 \begin{figure}[!ht]
    \centering
