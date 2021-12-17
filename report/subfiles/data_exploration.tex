@@ -37,7 +37,7 @@ Although not a universal rule, many machine learning algorithms require the vari
 
 \section{Dimensionality Reduction}
 
-To address the large set of correlated variables in our data, we use principal component analysis (PCA) as a means of dimensionality reduction. This is because PCA summarizes the correlated variables to a smaller subset which would explain most of their variability \cite{intro_stat_learning}.
+To address the large set of correlated variables in our data, we use principal component analysis (PCA) as a means of dimensionality reduction. This is because PCA summarizes the correlated variables to a smaller subset which would explain most of their variability \cite{intro_stat_learning}. The main intention is to decrease bias, hence improving generalization accuracy.
 
 Prior to applying PCA, we divided the training dataset into a separate train and test set using stratified sampling, with the test set containing 20\% of the data. The reason for this is so that PCA is fit on the train set only and then applied to the test set in order to avoid overfitting to known data. Any results presented in this section are based on the 80\% of the train set chosen. Furthermore, before any dimensionality reduction is applied, the data is also scaled to mean zero and unit variance.
 
