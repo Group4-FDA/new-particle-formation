@@ -1,3 +1,8 @@
+"""
+This script divides the original dataset into its own train and test set
+The split is 80% train set and 20% for the test set
+"""
+
 import sys
 sys.path += ['machine_learning']
 

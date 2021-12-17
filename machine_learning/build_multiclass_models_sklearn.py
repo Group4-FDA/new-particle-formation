@@ -1,3 +1,12 @@
+"""
+This class inherits from the build_models_sklearn_template to build
+multiclass models on the dataset using both the original dataset as well
+as the features after going through PCA
+
+When evaluating, it is also evaluated based on binary classification
+"""
+
+
 from utils import \
     scale_features, print_stdout_and_file, plot_confusion_matrix, perplexity
 from build_models_sklearn_template import \

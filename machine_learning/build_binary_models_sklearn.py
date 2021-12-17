@@ -1,3 +1,10 @@
+"""
+This class inherits from the build_models_sklearn_template to build
+binary models on the dataset using both the original dataset as well
+as the features after going through PCA
+"""
+
+
 from build_models_sklearn_template import \
     BuildModelsSklearnTemplate
 from utils import scale_features, print_stdout_and_file, plot_confusion_matrix

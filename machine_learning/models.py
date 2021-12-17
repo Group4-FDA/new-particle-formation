@@ -1,3 +1,8 @@
+"""
+Json formatted details for hyper parameter tuning
+sklearn models
+"""
+
 # classification models
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
