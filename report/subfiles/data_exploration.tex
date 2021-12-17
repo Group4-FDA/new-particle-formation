@@ -6,27 +6,27 @@ In this section we explore the given data and draw some preliminary observations
 
 We are provided with 2 datasets. The training dataset contains 458 days, half of which are NPF events and half are not. The distribution of classes is displayed in Figure \ref{fig:class_distribution}. The testing dataset contains 965 unclassified days. However, these days are sampled at random from the real data, so we cannot assume that they will have the same distribution as the days in the train data.
 
-\begin{figure}
+\begin{figure}[!ht]
    \centering
-   \includegraphics[width=\textwidth]{images/class_distribution.png}
+   \includegraphics[width=0.65\textwidth]{images/class_distribution.png}
    \caption{Class distribution of the target variable}
    \label{fig:class_distribution}
 \end{figure}
 
 % TODO: insert pairplot here and something about it
 
-Both datasets contain 50 variables which are mainly measured at the SMEAR II mast \cite{npf_paper}. The variables are further split into their daily means and standard deviations, measured at various times between sunrise and sunset. These consist of relative humidity, carbon monoxide (CO2) concentration, water vapour (H20) concentration, ozone concentration, air temperature, and ultraviolet radiation among others. Some concentrations of the same element are measured at different heights. To understand these height differences better, we provide Figure \ref{height} , which shows where each point indicates the height at which the measurements are taken. These variables are expected to be highly correlated.
+Both datasets contain 50 variables which are mainly measured at the SMEAR II mast \cite{npf_paper}. The variables are further split into their daily means and standard deviations, measured at various times between sunrise and sunset. These consist of relative humidity, carbon monoxide (CO2) concentration, water vapour (H20) concentration, ozone concentration, air temperature, and ultraviolet radiation among others. Some concentrations of the same element are measured at different heights. To understand these height differences better, we provide Figure \ref{fig:height} , which shows where each point indicates the height at which the measurements are taken. These variables are expected to be highly correlated.
 
 \begin{figure}
    \centering
-   \includegraphics[width=\textwidth]{images/height.png}
+   \includegraphics[width=0.5\textwidth]{images/height.png}
    \caption{Heights at which the recordings were taken. Jitter is applied to the points to observe density.}
    \label{fig:height}
 \end{figure}
 
-Figure \ref{correlation_matrix} displays a correlation matrix which shows the relationships across the variables. This visualisations only focuses on the mean values of each variable. This restriction is made because while it makes sense to analyze the correlation between the means, the correlation between two standard deviations is unclear. As we stated previously, the measurements of an element at different heights are highly correlated. For example, the correlation coefficient of measurements of H20 at different heights is close to 1.
+Figure \ref{fig:correlation_matrix} displays a correlation matrix which shows the relationships across the variables. This visualisations only focuses on the mean values of each variable. This restriction is made because while it makes sense to analyze the correlation between the means, the correlation between two standard deviations is unclear. As we stated previously, the measurements of an element at different heights are highly correlated. For example, the correlation coefficient of measurements of H20 at different heights is close to 1.
 
-\begin{figure}
+\begin{figure}[!ht]
    \centering
    \includegraphics[width=\textwidth]{images/correlation_matrix.png}
    \caption{Correlation matrix between the means of our features}
@@ -52,7 +52,7 @@ In PCA, every component explains a part of the variation of the original data. W
 
 Lastly, in order to interpret the PCA results, we show the correlation matrix of the new components against the original features in Figure \ref{fig:pca_correlation_matrix}. One can see, for example, the first component clearly summarizes the means of relative humidity (RHIRGA), while the second component explains the means of H20 and the third one explains NO and NOx. NO and NOx are highly correlated so this makes sense that they form one component.
 
-\begin{figure}
+\begin{figure}[!ht]
    \centering
    \includegraphics[width=\textwidth]{images/pca_correlation_matrix.png}
    \caption{Correlation matrix between principal components and original features}
