@@ -24,6 +24,17 @@ Both datasets contain 50 variables which are mainly measured at the SMEAR II mas
    \label{fig:height}
 \end{figure}
 
+Plot \ref{fig:pair_plot} shows the distribution of 5 variables in different categories. Purple colour indicates days without NPF, blue - NPF of type II, green - NPF of type Ib and pink - NPF of type Ia.
+
+From the previous research, we know that the relative humidity and condensation sink influences NPF. From the plot above, you can see that relative humidity is indeed distributed differently for the days with and without NPF. The values of condensation sink (CS.mean) does not seem to indicate the type of NPF or its absence that well. We think this is due to a small variation in the mean values of the condensation sink. The plot also includes the inner-class distributions of net radiation, reflected solar radiation and ultraviolet radiation variables. We chose these variables because they visually appear to be good predictors of the event. 
+
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/pair_plot.png}
+   \caption{Pairplot of variables that are distributed differently on day with and without NPF}
+   \label{fig:height}
+\end{figure}
+
 Figure \ref{fig:correlation_matrix} displays a correlation matrix which shows the relationships across the variables. This visualisations only focuses on the mean values of each variable. This restriction is made because while it makes sense to analyze the correlation between the means, the correlation between two standard deviations is unclear. As we stated previously, the measurements of an element at different heights are highly correlated. For example, the correlation coefficient of measurements of H20 at different heights is close to 1.
 
 \begin{figure}[!ht]
